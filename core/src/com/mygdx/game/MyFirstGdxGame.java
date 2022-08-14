@@ -10,12 +10,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class MyFirstGdxGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    int clck = 0;
+    int clck = 0;       //first hw
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        img = new Texture("free-png.ru-442.png");
+        img = new Texture("free-png.ru-442.png");   //first hw
     }
 
     @Override
@@ -23,18 +23,18 @@ public class MyFirstGdxGame extends ApplicationAdapter {
         ScreenUtils.clear(1, 1, 1, 1);
 
 
-        float x = Gdx.input.getX() - img.getHeight() / 2;
-        float y = Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight() / 2;
+        float x = Gdx.input.getX() - img.getHeight() / 2;           //first hw
+        float y = Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight() / 2;        //first hw
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {        //first hw
             clck++;
         }
 
-        Gdx.graphics.setTitle("clicked " + clck + " times");
+        Gdx.graphics.setTitle("clicked " + clck + " times");    //first hw
 
 
         batch.begin();
-        batch.draw(img, x, y);
+        batch.draw(img, x, y);      //first hw
         batch.end();
     }
 
