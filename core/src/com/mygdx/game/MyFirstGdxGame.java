@@ -23,7 +23,7 @@ public class MyFirstGdxGame extends ApplicationAdapter {
         ScreenUtils.clear(1, 1, 1, 1);
 
 
-        float x = Gdx.input.getX() - img.getHeight() / 2;           //first hw
+        float x = Gdx.input.getX() - img.getHeight() / 2;          //first hw
         float y = Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight() / 2;        //first hw
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {        //first hw
@@ -34,7 +34,7 @@ public class MyFirstGdxGame extends ApplicationAdapter {
 
 
         batch.begin();
-        batch.draw(img, x, y);      //first hw
+        batch.draw(img, x, y);     //first hw
         batch.end();
     }
 
