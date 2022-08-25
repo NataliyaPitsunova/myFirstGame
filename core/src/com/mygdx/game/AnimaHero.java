@@ -38,9 +38,9 @@ public class AnimaHero {
         time += Gdx.graphics.getDeltaTime();*/
 
         atlas = new TextureAtlas("atlas/atlas.atlas");
- /*       anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("idle"));
+ /*     anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("idle"));
         anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("walk"));*/
-        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 15f, atlas.findRegions("run"));
+        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 60f, atlas.findRegions("run"));
 /*
         anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("jump"));
         anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("ATTACK"));

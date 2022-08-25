@@ -24,18 +24,16 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRender;
-    private float step = 2;
+    private float step = 3;
     private Rectangle mapSize;
     private AnimaHero animaHero;
     private boolean lookRight = true;
-    private int x;
 
 
     public GameScreen(Main game) {
+        animaHero = new AnimaHero("atlas.png", 1, 1, Animation.PlayMode.LOOP);
         this.game = game;
         batch = new SpriteBatch();
-        animaHero = new AnimaHero("atlas.png", 1, 1, Animation.PlayMode.LOOP);
-        ;
         img = new Texture("bg.png");
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.zoom = 0.8f;
@@ -49,7 +47,6 @@ public class GameScreen implements Screen {
         camera.position.y = tmp.getRectangle().y;
         tmp = (RectangleMapObject) map.getLayers().get("obj").getObjects().get("border");
         mapSize = tmp.getRectangle();
-        x = 0;
     }
 
     @Override
@@ -59,14 +56,25 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        camera.update();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && mapSize.x < (camera.position.x - 1)) {
             camera.position.x -= step;
-            lookRight = false;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && mapSize.x + mapSize.width > (camera.position.x + 1)) {
             camera.position.x += step;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+            lookRight = false;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             lookRight = true;
+        }
+
+        if (!animaHero.getFrame().isFlipX() && !lookRight) {
+            animaHero.getFrame().flip(true, false);
+        }
+        if (animaHero.getFrame().isFlipX() && lookRight) {
+            animaHero.getFrame().flip(true, false);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
@@ -78,10 +86,7 @@ public class GameScreen implements Screen {
         }
 
 
-        camera.update();
-
         ScreenUtils.clear(Color.DARK_GRAY);
-
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -95,18 +100,10 @@ public class GameScreen implements Screen {
             game.setScreen(new MenuScreen(game));
         }
 
-        if (!animaHero.getFrame().isFlipX() && !(lookRight)) {
-            animaHero.getFrame().flip(true, false);
-        }
-
-        if (animaHero.getFrame().isFlipX() && lookRight) {
-            animaHero.getFrame().flip(true, false);
-        }
         batch.begin();
         animaHero.setTime(Gdx.graphics.getDeltaTime());
         batch.draw(animaHero.getFrame(), Gdx.graphics.getWidth() / 2, 40);
         batch.end();
-
     }
 
     @Override
@@ -132,8 +129,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        this.animaHero.dispose();
         this.batch.dispose();
         this.img.dispose();
-        this.animaHero.dispose();
     }
+
 }
