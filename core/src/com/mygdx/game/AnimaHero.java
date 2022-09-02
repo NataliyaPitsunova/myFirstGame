@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,47 +13,13 @@ public class AnimaHero {
     private float time;
 
 
-    public AnimaHero(String name, int col, int row, Animation.PlayMode playMode) {
-
-    /*    img = new Texture(name);
-        region0 = new TextureRegion(img);
-        int xCnt = region0.getRegionWidth() / col;
-        int yCnt = region0.getRegionHeight() / row;
-        TextureRegion[][] regions = region0.split(xCnt, yCnt);
-        TextureRegion[] region1 = new TextureRegion[regions.length * regions[0].length];
-        int cnt = 0;
-
-
-        for (TextureRegion[] i : regions
-        ) {
-            for (TextureRegion hero : i
-            ) {
-                region1[cnt++] = hero;
-            }
-        }
-        anm = new Animation<TextureRegion>(1.0f/16, regions[0]);
+    public AnimaHero(String name, String action, Animation.PlayMode playMode) {         //action: "hurt" "DIE" "idle" "run" "walk" "jump" "ATTACK"
+        atlas = new TextureAtlas("atlas/" + name + ".atlas");
+        float fps = 1 / 15f;
+        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(fps, atlas.findRegions(action));
         anm.setPlayMode(playMode);
-
-        time += Gdx.graphics.getDeltaTime();*/
-
-        atlas = new TextureAtlas("atlas/atlas.atlas");
- /*     anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("idle"));
-        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("walk"));*/
-        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 60f, atlas.findRegions("run"));
-/*
-        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("jump"));
-        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("ATTACK"));
-        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("hurt"));
-        anm = new com.badlogic.gdx.graphics.g2d.Animation<TextureRegion>(1 / 30f, atlas.findRegions("DIE"));
-*/
-
-
-
-
-        anm.setPlayMode(playMode);
-
-        time += Gdx.graphics.getDeltaTime();
-    }
+        time =0;
+}
 
     public TextureRegion getFrame() {
         return anm.getKeyFrame(time);
@@ -77,7 +42,6 @@ public class AnimaHero {
     }
 
     public void dispose() {
-        img.dispose();
         atlas.dispose();
     }
 }

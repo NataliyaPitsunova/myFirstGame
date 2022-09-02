@@ -13,40 +13,84 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.AnimaHero;
+import com.mygdx.game.KeyboardController;
 import com.mygdx.game.Main;
+
+import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     private final Main game;
     private final SpriteBatch batch;
     private final Texture img;
+    private final AnimaHero anmJump;
+    private final AnimaHero anmIdle;
+    private final AnimaHero anmHurt;
+    private final AnimaHero anmWalk;
+    private final AnimaHero anmAttack;
+    private final AnimaHero anmDie;
+    private final AnimaHero anmRun;
+    private AnimaHero hero;
+    private KeyboardController controller;
     private OrthographicCamera camera;
-    private TiledMap map;
     private OrthogonalTiledMapRenderer mapRender;
-    private float step = 3;
-    private Rectangle mapSize;
-    private AnimaHero animaHero;
-    private boolean lookRight = true;
+    private PhisX phisX;
+    private boolean lookRight = false;
+    private final int[] bg;
+    private final int[] l1;
+    private Body body;
+    private final Rectangle heroRect;
+    public static ArrayList<Body> bodies;
 
 
     public GameScreen(Main game) {
-        animaHero = new AnimaHero("atlas.png", 1, 1, Animation.PlayMode.LOOP);
         this.game = game;
+        controller = new KeyboardController();
+        bodies = new ArrayList<>();
         batch = new SpriteBatch();
         img = new Texture("bg.png");
+        anmIdle = new AnimaHero("atlas", "idle", Animation.PlayMode.LOOP);
+        anmJump = new AnimaHero("atlas", "jump", Animation.PlayMode.LOOP);
+        anmHurt = new AnimaHero("atlas", "hurt", Animation.PlayMode.LOOP);
+        anmDie = new AnimaHero("atlas", "DIE", Animation.PlayMode.LOOP);
+        anmRun = new AnimaHero("atlas", "run", Animation.PlayMode.LOOP);
+        anmWalk = new AnimaHero("atlas", "walk", Animation.PlayMode.LOOP);
+        anmAttack = new AnimaHero("atlas", "ATTACK", Animation.PlayMode.LOOP);
+        hero = anmIdle;
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.zoom = 0.8f;
-        TmxMapLoader tm = new TmxMapLoader();
-        map = tm.load("map/map1.tmx");
+        camera.zoom = 0.35f;
+
+        TiledMap map = new TmxMapLoader().load("map/map1.tmx");
         mapRender = new OrthogonalTiledMapRenderer(map);
 
+        bg = new int[1];
+        bg[0] = map.getLayers().getIndex("1");
 
-        RectangleMapObject tmp = (RectangleMapObject) map.getLayers().get("obj").getObjects().get("cam");
-        camera.position.x = tmp.getRectangle().x;
-        camera.position.y = tmp.getRectangle().y;
-        tmp = (RectangleMapObject) map.getLayers().get("obj").getObjects().get("border");
-        mapSize = tmp.getRectangle();
+        l1 = new int[3];
+        l1[0] = map.getLayers().getIndex("2");
+        l1[1] = map.getLayers().getIndex("3");
+        l1[2] = map.getLayers().getIndex("6");
+
+        phisX = new PhisX();
+
+        map.getLayers().get("obj").getObjects().getByType(RectangleMapObject.class);
+        RectangleMapObject tmp = (RectangleMapObject) map.getLayers().get("setting").getObjects().get("hero");
+        heroRect = tmp.getRectangle();
+        body = phisX.addObj(tmp);
+
+
+        Array<RectangleMapObject> obj = map.getLayers().get("obj").getObjects().getByType(RectangleMapObject.class);
+
+        for (RectangleMapObject object : obj
+        ) {
+            phisX.addObj(object);
+        }
+
+
     }
 
     @Override
@@ -56,54 +100,87 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.update();
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && mapSize.x < (camera.position.x - 1)) {
-            camera.position.x -= step;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && mapSize.x + mapSize.width > (camera.position.x + 1)) {
-            camera.position.x += step;
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            lookRight = false;
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            lookRight = true;
+        float step = 3;
+        Gdx.input.setInputProcessor(controller);
+        hero.setTime(Gdx.graphics.getDeltaTime());
+        if (!hero.getFrame().isFlipX() && !(controller.lookright)) {
+            hero.getFrame().flip(true, false);
         }
 
-        if (!animaHero.getFrame().isFlipX() && !lookRight) {
-            animaHero.getFrame().flip(true, false);
+        if (hero.getFrame().isFlipX() && controller.lookright) {
+            hero.getFrame().flip(true, false);
         }
-        if (animaHero.getFrame().isFlipX() && lookRight) {
-            animaHero.getFrame().flip(true, false);
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            hero = anmRun;
+            body.applyForceToCenter(new Vector2(-100, 0), true);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            hero = anmRun;
+            body.applyForceToCenter(new Vector2(+100, 0), true);
+        }
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            hero = anmJump;
+          //  body.applyLinearImpulse(0, 10f, body.getPosition().x, body.getPosition().y, true);
+            body.applyForceToCenter(0, 8f, true);
+            camera.position.y += 3*step;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            hero = anmIdle;
+            camera.position.y -= step;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             camera.zoom -= 0.01f;
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.O) && camera.zoom > 0) {
-            camera.zoom += 0.01f;
+        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+            if (camera.zoom > 0) {
+                camera.zoom += 0.01f;
+            }
+
         }
 
+        camera.position.x = body.getPosition().x;
+        camera.position.y = body.getPosition().y;
+
+        camera.update();
 
         ScreenUtils.clear(Color.DARK_GRAY);
 
+        System.out.println(body.getLinearVelocity());
+
         batch.setProjectionMatrix(camera.combined);
+        heroRect.x = body.getPosition().x - heroRect.width / 2;
+        heroRect.y = body.getPosition().y - heroRect.height / 2;
+        mapRender.setView(camera);
+        mapRender.render(bg);
+        mapRender.render(l1);
+
         batch.begin();
-        batch.draw(img, 0, 0);
+        batch.draw(hero.getFrame(), heroRect.x, heroRect.y, heroRect.width, heroRect.height);
         batch.end();
 
-        mapRender.setView(camera);
-        mapRender.render();
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             game.setScreen(new MenuScreen(game));
         }
 
-        batch.begin();
-        animaHero.setTime(Gdx.graphics.getDeltaTime());
-        batch.draw(animaHero.getFrame(), Gdx.graphics.getWidth() / 2, 40);
-        batch.end();
+
+        phisX.step();
+        phisX.debugDraw(camera);
+
+/*        Iterator<Body> bodyIterator = bodies.listIterator();
+        for (int i = 0; i < bodies.size(); i++) {
+            phisX.destroyBody(bodies.get(i));
+        }
+        bodies.clear();*/
     }
 
     @Override
@@ -129,7 +206,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.animaHero.dispose();
+        this.hero.dispose();
         this.batch.dispose();
         this.img.dispose();
     }

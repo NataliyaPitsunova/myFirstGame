@@ -19,8 +19,6 @@ public class Main extends Game {
     @Override
     public void render() {
         super.render();
-        if (getScreen() instanceof GameScreen) {
-        }
     }
 
     @Override
