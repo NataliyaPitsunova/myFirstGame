@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -22,6 +23,7 @@ import com.mygdx.game.KeyboardController;
 import com.mygdx.game.Main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameScreen implements Screen {
     private final Main game;
@@ -50,6 +52,8 @@ public class GameScreen implements Screen {
     public GameScreen(Main game) {
         this.game = game;
         controller = new KeyboardController();
+        Gdx.input.setInputProcessor(controller);
+
         bodies = new ArrayList<>();
         batch = new SpriteBatch();
         img = new Texture("bg.png");
@@ -101,7 +105,6 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         float step = 3;
-        Gdx.input.setInputProcessor(controller);
         hero.setTime(Gdx.graphics.getDeltaTime());
         if (!hero.getFrame().isFlipX() && !(controller.lookright)) {
             hero.getFrame().flip(true, false);
@@ -110,29 +113,32 @@ public class GameScreen implements Screen {
         if (hero.getFrame().isFlipX() && controller.lookright) {
             hero.getFrame().flip(true, false);
         }
+        boolean rest = false;
 
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)&&phisX.myContList.isOnGround()) {
+            rest = true;
             hero = anmRun;
-            body.applyForceToCenter(new Vector2(-100, 0), true);
+            body.applyForceToCenter(new Vector2(-0.03f, 0), true);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)&&phisX.myContList.isOnGround()) {
+            rest = true;
             hero = anmRun;
-            body.applyForceToCenter(new Vector2(+100, 0), true);
+            body.applyForceToCenter(new Vector2(+0.03f, 0), true);
         }
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            hero = anmJump;
-          //  body.applyLinearImpulse(0, 10f, body.getPosition().x, body.getPosition().y, true);
-            body.applyForceToCenter(0, 8f, true);
-            camera.position.y += 3*step;
+            rest = true;
+            if (phisX.myContList.isOnGround()) {
+                hero = anmJump;
+                body.applyForceToCenter(0, 0.4f, true);
+            }
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            rest = true;
             hero = anmIdle;
-            camera.position.y -= step;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
@@ -146,24 +152,32 @@ public class GameScreen implements Screen {
 
         }
 
-        camera.position.x = body.getPosition().x;
-        camera.position.y = body.getPosition().y;
+        if (!rest) {
+            hero = anmIdle;
+        }
+
+        camera.position.x = body.getPosition().x * phisX.PPM;
+        camera.position.y = body.getPosition().y * phisX.PPM;
 
         camera.update();
 
         ScreenUtils.clear(Color.DARK_GRAY);
 
-        System.out.println(body.getLinearVelocity());
-
-        batch.setProjectionMatrix(camera.combined);
         heroRect.x = body.getPosition().x - heroRect.width / 2;
         heroRect.y = body.getPosition().y - heroRect.height / 2;
         mapRender.setView(camera);
         mapRender.render(bg);
         mapRender.render(l1);
 
+        float x = Gdx.graphics.getWidth() / 2 - heroRect.getWidth() / 2 / camera.zoom;
+        float y = Gdx.graphics.getHeight() / 2 - heroRect.getHeight() / 2 / camera.zoom;
+
+        Sprite spr = new Sprite(hero.getFrame());
+        spr.setOriginCenter();
+        spr.scale(1.5f);
+        spr.setPosition(x, y);
         batch.begin();
-        batch.draw(hero.getFrame(), heroRect.x, heroRect.y, heroRect.width, heroRect.height);
+        spr.draw(batch);
         batch.end();
 
 
@@ -176,11 +190,11 @@ public class GameScreen implements Screen {
         phisX.step();
         phisX.debugDraw(camera);
 
-/*        Iterator<Body> bodyIterator = bodies.listIterator();
+        Iterator<Body> bodyIterator = bodies.listIterator();
         for (int i = 0; i < bodies.size(); i++) {
             phisX.destroyBody(bodies.get(i));
         }
-        bodies.clear();*/
+        bodies.clear();
     }
 
     @Override

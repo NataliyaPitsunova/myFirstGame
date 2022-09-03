@@ -8,15 +8,17 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.MyContList;
 
 public class PhisX {
-    private  World world;
+    private World world;
     private final Box2DDebugRenderer box2DDebugRenderer;
+    public final float PPM = 100;
+    public MyContList myContList;
 
-    public PhisX() {
+    PhisX() {
         world = new World(new Vector2(0, -9.81f), true);
-        world.setContactListener(new MyContList());
+        myContList = new MyContList();
+        world.setContactListener(myContList);
         box2DDebugRenderer = new Box2DDebugRenderer();
     }
-
 
 
     public Body addObj(RectangleMapObject obj) {
@@ -25,8 +27,7 @@ public class PhisX {
         BodyDef def = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        CircleShape circleShape;
-        ChainShape chainShape;
+
 
         switch (type) {
             case "StaticBody":
@@ -37,21 +38,25 @@ public class PhisX {
                 break;
         }
 
-        def.position.set(rect.x + rect.width / 2, rect.y + rect.height / 2);
+        def.position.set((rect.x + rect.width / 2) / PPM, (rect.y + rect.height / 2) / PPM);
         def.gravityScale = (float) obj.getProperties().get("gravityScale");
 
-        polygonShape.setAsBox(rect.width / 2, rect.height / 2);
+        polygonShape.setAsBox(rect.width / 2 / PPM, rect.height / 2 / PPM);
 
         fdef.shape = polygonShape;
         fdef.friction = 0.85f;
-        fdef.density = 0.0001f;
+        fdef.density = 1;
         fdef.restitution = (float) obj.getProperties().get("restitution");
 
         Body body;
         body = world.createBody(def);
         String name = obj.getName();
         body.createFixture(fdef).setUserData(name);
-
+        if (name.equals("hero")) {
+            polygonShape.setAsBox(rect.width / 3 / PPM, rect.height / 12 / PPM,new Vector2(0,-rect.width/2/PPM),0);
+            body.createFixture(fdef).setUserData("ноги");
+            body.setFixedRotation(true);
+        }
 
         polygonShape.dispose();
         return body;
@@ -62,7 +67,7 @@ public class PhisX {
     }
 
     public void step() {
-        world.step(1/60f,3, 3);
+        world.step(1 / 60f, 3, 3);
     }
 
     public void debugDraw(OrthographicCamera cam) {
@@ -76,6 +81,7 @@ public class PhisX {
         box2DDebugRenderer.dispose();
     }
 
-    public void destroyBody(Body body) { world.destroyBody(body);
+    public void destroyBody(Body body) {
+        world.destroyBody(body);
     }
 }
