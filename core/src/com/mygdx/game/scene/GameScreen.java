@@ -3,6 +3,8 @@ package com.mygdx.game.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +23,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.AnimaHero;
 import com.mygdx.game.KeyboardController;
 import com.mygdx.game.Main;
+import com.mygdx.game.PhisX;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,13 +50,16 @@ public class GameScreen implements Screen {
     private Body body;
     private final Rectangle heroRect;
     public static ArrayList<Body> bodies;
+    private Sound sound;
 
 
     public GameScreen(Main game) {
         this.game = game;
         controller = new KeyboardController();
         Gdx.input.setInputProcessor(controller);
-
+        sound = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
+        long soundId  = sound.play();
+        sound.setVolume(soundId,1);
         bodies = new ArrayList<>();
         batch = new SpriteBatch();
         img = new Texture("bg.png");
@@ -68,16 +74,15 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.zoom = 0.35f;
 
-        TiledMap map = new TmxMapLoader().load("map/map1.tmx");
+        TiledMap map = new TmxMapLoader().load("map/map2.tmx");
         mapRender = new OrthogonalTiledMapRenderer(map);
 
         bg = new int[1];
         bg[0] = map.getLayers().getIndex("1");
 
-        l1 = new int[3];
+        l1 = new int[1];
         l1[0] = map.getLayers().getIndex("2");
-        l1[1] = map.getLayers().getIndex("3");
-        l1[2] = map.getLayers().getIndex("6");
+
 
         phisX = new PhisX();
 
@@ -118,21 +123,23 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)&&phisX.myContList.isOnGround()) {
             rest = true;
             hero = anmRun;
-            body.applyForceToCenter(new Vector2(-0.03f, 0), true);
+            body.setLinearVelocity(-2.5f,0);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)&&phisX.myContList.isOnGround()) {
             rest = true;
             hero = anmRun;
-            body.applyForceToCenter(new Vector2(+0.03f, 0), true);
+            body.setLinearVelocity(2.5f,0);
         }
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             rest = true;
             if (phisX.myContList.isOnGround()) {
                 hero = anmJump;
-                body.applyForceToCenter(0, 0.4f, true);
+                sound.play();
+                body.applyLinearImpulse(0, 0.0006f, body.getPosition().x,  body.getPosition().y,false);
+
             }
         }
 
@@ -142,14 +149,13 @@ public class GameScreen implements Screen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            camera.zoom -= 0.01f;
+            camera.zoom += 0.01f;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.O)) {
             if (camera.zoom > 0) {
-                camera.zoom += 0.01f;
+                camera.zoom -= 0.01f;
             }
-
         }
 
         if (!rest) {
@@ -161,8 +167,10 @@ public class GameScreen implements Screen {
 
         camera.update();
 
-        ScreenUtils.clear(Color.DARK_GRAY);
-
+        ScreenUtils.clear(Color.BLACK);
+        batch.begin();
+        batch.draw(img, 0, 0);
+        batch.end();
         heroRect.x = body.getPosition().x - heroRect.width / 2;
         heroRect.y = body.getPosition().y - heroRect.height / 2;
         mapRender.setView(camera);
@@ -174,12 +182,11 @@ public class GameScreen implements Screen {
 
         Sprite spr = new Sprite(hero.getFrame());
         spr.setOriginCenter();
-        spr.scale(1.5f);
+        spr.scale(0.55f);
         spr.setPosition(x, y);
         batch.begin();
         spr.draw(batch);
         batch.end();
-
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();

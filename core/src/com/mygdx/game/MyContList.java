@@ -24,12 +24,13 @@ public class MyContList implements ContactListener {
                 GameScreen.bodies.add(a.getBody());
             }
 
-            if (tmpA.equals("ноги") && tmpB.equals("wall")) {
+            if (tmpA.equals("legs") && tmpB.equals("wall")) {
                 counter++;
             }
-            if (tmpB.equals("ноги") && tmpA.equals("wall")) {
+            if (tmpB.equals("legs") && tmpA.equals("wall")) {
                 counter++;
             }
+
         }
 
     }

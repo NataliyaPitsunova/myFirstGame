@@ -14,27 +14,26 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Main;
 
 
-public class MenuScreen implements Screen {
+public class MenuScreen<music> implements Screen {
     private final Main game;
     private final SpriteBatch spriteBatch;
     private final Texture img;
     private final Circle circle;
     private final ShapeRenderer shapeRenderer;
-/*    private final Music music;
-    private final Sound sound;*/
+    private final Music music;
 
     public MenuScreen(Main game) {
         this.game = game;
         spriteBatch = new SpriteBatch();
         img = new Texture("Main.png");
         circle = new Circle(460, 100, 60);
-        shapeRenderer = new ShapeRenderer();}
-       /* music = Gdx.audio.newMusic(Gdx.files.internal(""));
+        shapeRenderer = new ShapeRenderer();
+        music = Gdx.audio.newMusic(Gdx.files.internal("menuMusic.mp3"));
         music.setLooping(true);
-        music.setVolume(0.05f);
+        music.setVolume(0.8f);
         music.play();
-
-        sound = Gdx.audio.newSound(Gdx.files.internal(""));*/
+    }
+      //  sound = Gdx.audio.newSound(Gdx.files.internal(""));*/
 
 
 
@@ -96,7 +95,7 @@ public class MenuScreen implements Screen {
         this.spriteBatch.dispose();
         this.img.dispose();
         this.shapeRenderer.dispose();
-       // this.music.dispose();
+        this.music.dispose();
     }
 
 }

@@ -16,7 +16,7 @@ public class MyFirstGdxGame extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        anm = new AnimaHero("heroSpritesheet.png", 6, 1, Animation.PlayMode.LOOP);
+        anm = new AnimaHero("atlas", "idle", Animation.PlayMode.LOOP);
         x = anm.getFrame().getRegionX();
     }
 
@@ -25,7 +25,6 @@ public class MyFirstGdxGame extends ApplicationAdapter {
         ScreenUtils.clear(1, 1, 1, 1);
 
         anm.setTime(Gdx.graphics.getDeltaTime());
-        //дз перемещение кнопками
 /*
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             dir = false;

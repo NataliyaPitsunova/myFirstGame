@@ -1,4 +1,4 @@
-package com.mygdx.game.scene;
+package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -10,10 +10,10 @@ import com.mygdx.game.MyContList;
 public class PhisX {
     private World world;
     private final Box2DDebugRenderer box2DDebugRenderer;
-    public final float PPM = 100;
+    public final float PPM = 55;
     public MyContList myContList;
 
-    PhisX() {
+    public PhisX() {
         world = new World(new Vector2(0, -9.81f), true);
         myContList = new MyContList();
         world.setContactListener(myContList);
@@ -44,7 +44,7 @@ public class PhisX {
         polygonShape.setAsBox(rect.width / 2 / PPM, rect.height / 2 / PPM);
 
         fdef.shape = polygonShape;
-        fdef.friction = 0.85f;
+        fdef.friction = 0.95f;
         fdef.density = 1;
         fdef.restitution = (float) obj.getProperties().get("restitution");
 
@@ -54,7 +54,7 @@ public class PhisX {
         body.createFixture(fdef).setUserData(name);
         if (name.equals("hero")) {
             polygonShape.setAsBox(rect.width / 3 / PPM, rect.height / 12 / PPM,new Vector2(0,-rect.width/2/PPM),0);
-            body.createFixture(fdef).setUserData("ноги");
+            body.createFixture(fdef).setUserData("legs");
             body.setFixedRotation(true);
         }
 
