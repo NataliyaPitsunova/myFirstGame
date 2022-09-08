@@ -3,44 +3,83 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MyFirstGdxGame extends ApplicationAdapter {
     SpriteBatch batch;
-    Texture img;
-    int clck = 0;       //first hw
+    AnimaHero anm;
+    float x;
+    boolean dir = true;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        img = new Texture("free-png.ru-442.png");   //first hw
+        anm = new AnimaHero("atlas", "idle", Animation.PlayMode.LOOP);
+        x = anm.getFrame().getRegionX();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(1, 1, 1, 1);
 
-
-        float x = Gdx.input.getX() - img.getHeight() / 2;           //first hw
-        float y = Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight() / 2;        //first hw
-
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {        //first hw
-            clck++;
+        anm.setTime(Gdx.graphics.getDeltaTime());
+/*
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            dir = false;
+            if (x > 0) {
+                x--;
+            }
         }
 
-        Gdx.graphics.setTitle("clicked " + clck + " times");    //first hw
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            dir = true;
+            if (x < (Gdx.graphics.getWidth() - anm.getFrame().getRegionWidth())) {
+                x++;
+            }
+        }
 
+        if (!anm.getFrame().isFlipX() && !(dir)) {
+            anm.getFrame().flip(true,false);
+        }
+
+        if (anm.getFrame().isFlipX() && dir) {
+            anm.getFrame().flip(true,false);
+        }
+        batch.begin();
+        batch.draw(anm.getFrame(), x, 0);
+        batch.end();
+        */
+//дз перемещение героя без клавиш
+        if (x == (Gdx.graphics.getWidth() - anm.getFrame().getRegionWidth())) {
+            dir = false;
+        }
+
+        if (x == 0 && anm.getFrame().isFlipX()) {
+            dir = true;
+        }
+
+        if (!anm.getFrame().isFlipX() && !(dir)) {
+            anm.getFrame().flip(true,false);
+        }
+
+        if (anm.getFrame().isFlipX() && dir) {
+            anm.getFrame().flip(true,false);
+        }
 
         batch.begin();
-        batch.draw(img, x, y);      //first hw
+        if (!anm.getFrame().isFlipX()) {
+            batch.draw(anm.getFrame(), x++, 0);
+        } else{
+            batch.draw(anm.getFrame(), x--, 0);
+        }
         batch.end();
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-        img.dispose();
+        anm.dispose();
     }
 }

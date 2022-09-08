@@ -1,0 +1,349 @@
+
+tiles.png
+size: 512, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Bonus
+  rotate: false
+  xy: 452, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Brick
+  rotate: false
+  xy: 36, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+Brick
+  rotate: false
+  xy: 316, 38
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+Bridge
+  rotate: false
+  xy: 492, 238
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+Bridge
+  rotate: false
+  xy: 376, 20
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+Decor_Brick
+  rotate: false
+  xy: 398, 140
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Decor_Plant
+  rotate: false
+  xy: 172, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Decor_Ruins
+  rotate: false
+  xy: 2, 126
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+Decor_Ruins
+  rotate: false
+  xy: 132, 126
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+Decor_Statue
+  rotate: false
+  xy: 426, 190
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Fence
+  rotate: false
+  xy: 330, 140
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Grass
+  rotate: false
+  xy: 432, 138
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: 2
+Grass
+  rotate: false
+  xy: 282, 40
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: 1
+Ground
+  rotate: false
+  xy: 2, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 12
+Ground
+  rotate: false
+  xy: 296, 140
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+Ground
+  rotate: false
+  xy: 316, 106
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 9
+Ground
+  rotate: false
+  xy: 316, 72
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+Ground
+  rotate: false
+  xy: 138, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+Ground
+  rotate: false
+  xy: 206, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 11
+Ground
+  rotate: false
+  xy: 384, 106
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+Ground
+  rotate: false
+  xy: 432, 156
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+Ground
+  rotate: false
+  xy: 418, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 13
+Ground
+  rotate: false
+  xy: 452, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+Ground
+  rotate: false
+  xy: 384, 38
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 10
+Ground
+  rotate: false
+  xy: 452, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+Ground
+  rotate: false
+  xy: 308, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+Ground-Additional
+  rotate: false
+  xy: 2, 44
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 3
+Ground-Additional
+  rotate: false
+  xy: 262, 174
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 2
+Ground-Additional
+  rotate: false
+  xy: 84, 44
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 7
+Ground-Additional
+  rotate: false
+  xy: 344, 174
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 4
+Ground-Additional
+  rotate: false
+  xy: 166, 44
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 1
+Ground-Additional
+  rotate: false
+  xy: 248, 44
+  size: 32, 80
+  orig: 32, 80
+  offset: 0, 0
+  index: 6
+Ground-Additional
+  rotate: false
+  xy: 282, 58
+  size: 32, 80
+  orig: 32, 80
+  offset: 0, 0
+  index: 5
+Ladder
+  rotate: false
+  xy: 70, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Lion_Bas_Relief
+  rotate: false
+  xy: 262, 140
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Little_Wreckage
+  rotate: false
+  xy: 466, 156
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Rock
+  rotate: false
+  xy: 364, 140
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+Rock
+  rotate: false
+  xy: 418, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+Rock
+  rotate: false
+  xy: 466, 138
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: 4
+Rock
+  rotate: false
+  xy: 342, 2
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: 3
+Sign
+  rotate: false
+  xy: 350, 106
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+Sign
+  rotate: false
+  xy: 104, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+Sign
+  rotate: false
+  xy: 240, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+Sign
+  rotate: false
+  xy: 384, 72
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+Sign
+  rotate: false
+  xy: 350, 38
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+Sign
+  rotate: false
+  xy: 274, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+Spikes
+  rotate: false
+  xy: 342, 20
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+Wooden_Barrel
+  rotate: false
+  xy: 418, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wooden_Box
+  rotate: false
+  xy: 350, 72
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
