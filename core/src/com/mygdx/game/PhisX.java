@@ -10,7 +10,7 @@ import com.mygdx.game.MyContList;
 public class PhisX {
     private World world;
     private final Box2DDebugRenderer box2DDebugRenderer;
-    public final float PPM = 55;
+    public final float PPM = 100;
     public MyContList myContList;
 
     public PhisX() {

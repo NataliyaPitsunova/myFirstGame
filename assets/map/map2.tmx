@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="88" height="53" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="35">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="88" height="53" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="36">
  <tileset firstgid="1" source="../hyptosis_tile-art-batch-1.tsx"/>
  <tileset firstgid="3601" source="../hyptosis_til-art-batch-2.tsx"/>
  <tileset firstgid="7201" source="../pngfind.com-rpg-maker-png-4138524.tsx"/>
@@ -178,7 +178,7 @@
     <property name="restitution" type="float" value="0"/>
    </properties>
   </object>
-  <object id="13" name="wall" x="464.042" y="736.25" width="916.057" height="0.75">
+  <object id="13" name="wall" x="896.042" y="736.25" width="484.057" height="0.75">
    <properties>
     <property name="BodyType" value="StaticBody"/>
     <property name="gravityScale" type="float" value="1"/>
@@ -220,7 +220,7 @@
     <property name="restitution" type="float" value="0"/>
    </properties>
   </object>
-  <object id="19" name="wall" x="772.167" y="707.333" width="123" height="34.3333">
+  <object id="19" name="wall" x="772.167" y="707.333" width="123" height="29.8333">
    <properties>
     <property name="BodyType" value="StaticBody"/>
     <property name="gravityScale" type="float" value="1"/>
@@ -248,12 +248,19 @@
     <property name="restitution" type="float" value="0"/>
    </properties>
   </object>
+  <object id="35" name="wall" x="465.471" y="735.625" width="305.557" height="0.75">
+   <properties>
+    <property name="BodyType" value="StaticBody"/>
+    <property name="gravityScale" type="float" value="5"/>
+    <property name="restitution" type="float" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="setting">
   <object id="26" name="hero" x="1246.75" y="709.37" width="0.5" height="1.76">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
-    <property name="gravityScale" type="float" value="10"/>
+    <property name="gravityScale" type="float" value="1"/>
     <property name="restitution" type="float" value="0.05"/>
    </properties>
   </object>

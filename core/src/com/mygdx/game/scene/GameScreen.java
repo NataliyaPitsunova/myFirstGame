@@ -3,7 +3,6 @@ package com.mygdx.game.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -58,8 +56,8 @@ public class GameScreen implements Screen {
         controller = new KeyboardController();
         Gdx.input.setInputProcessor(controller);
         sound = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
-        long soundId  = sound.play();
-        sound.setVolume(soundId,1);
+        long soundId = sound.play();
+        sound.setVolume(soundId, 1);
         bodies = new ArrayList<>();
         batch = new SpriteBatch();
         img = new Texture("bg.png");
@@ -70,7 +68,7 @@ public class GameScreen implements Screen {
         anmRun = new AnimaHero("atlas", "run", Animation.PlayMode.LOOP);
         anmWalk = new AnimaHero("atlas", "walk", Animation.PlayMode.LOOP);
         anmAttack = new AnimaHero("atlas", "ATTACK", Animation.PlayMode.LOOP);
-        hero = anmIdle;
+        hero = anmRun;
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.zoom = 0.35f;
 
@@ -120,16 +118,18 @@ public class GameScreen implements Screen {
         }
         boolean rest = false;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)&&phisX.myContList.isOnGround()) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && phisX.myContList.isOnGround()) {
             rest = true;
             hero = anmRun;
-            body.setLinearVelocity(-2.5f,0);
+         //   body.setLinearVelocity(-6f, 0);
+            body.applyForceToCenter(-0.001f, 0, true);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)&&phisX.myContList.isOnGround()) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && phisX.myContList.isOnGround()) {
             rest = true;
             hero = anmRun;
-            body.setLinearVelocity(2.5f,0);
+           body.applyForceToCenter(0.001f, 0, true);
+        //    body.setLinearVelocity(6f, 0);
         }
 
 
@@ -138,8 +138,7 @@ public class GameScreen implements Screen {
             if (phisX.myContList.isOnGround()) {
                 hero = anmJump;
                 sound.play();
-                body.applyLinearImpulse(0, 0.0006f, body.getPosition().x,  body.getPosition().y,false);
-
+                body.applyLinearImpulse(0, 0.00045f, body.getPosition().x, body.getPosition().y, true);
             }
         }
 
@@ -182,7 +181,7 @@ public class GameScreen implements Screen {
 
         Sprite spr = new Sprite(hero.getFrame());
         spr.setOriginCenter();
-        spr.scale(0.55f);
+        spr.scale(0.85f);
         spr.setPosition(x, y);
         batch.begin();
         spr.draw(batch);
