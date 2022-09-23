@@ -5,7 +5,10 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.MyContList;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class PhisX {
     private World world;
@@ -44,22 +47,49 @@ public class PhisX {
         polygonShape.setAsBox(rect.width / 2 / PPM, rect.height / 2 / PPM);
 
         fdef.shape = polygonShape;
-        fdef.friction = 0.95f;
+        fdef.friction = 0.85f;
         fdef.density = 1;
         fdef.restitution = (float) obj.getProperties().get("restitution");
 
+                String name = "";
+        if (obj.getName() != null) {
+            name = obj.getName();
+        }
         Body body;
         body = world.createBody(def);
-        String name = obj.getName();
+
+        body.setUserData(new PhisBodies(name, new Vector2(rect.x, rect.y), new Vector2(rect.width, rect.height)));
         body.createFixture(fdef).setUserData(name);
-        if (name.equals("hero")) {
-            polygonShape.setAsBox(rect.width / 3 / PPM, rect.height / 12 / PPM,new Vector2(0,-rect.width/2/PPM),0);
-            body.createFixture(fdef).setUserData("legs");
+
+        if (name != null && name.equals("hero")) {
+            //сенсор для бега
+            polygonShape.setAsBox(rect.width / 3 / PPM, rect.height / 12 / PPM, new Vector2(0, -rect.width / 2 / PPM), 0);
+            fdef.restitution = 0;
+            body.createFixture(fdef).setUserData("legsRuns");
+            body.getFixtureList().get(body.getFixtureList().size - 1).setSensor(true);
             body.setFixedRotation(true);
+            body.getFixtureList().get(0).setRestitution(0);
+//маленький сенсор для стония не на земле
+            polygonShape.setAsBox(rect.width / 5 / PPM, rect.height / 20 / PPM, new Vector2(0, -rect.width / 2 / PPM), 0);
+            fdef.restitution = 0;
+            body.createFixture(fdef).setUserData("legsJump");
+            body.getFixtureList().get(body.getFixtureList().size - 1).setSensor(true);
+            body.setFixedRotation(true);
+            body.getFixtureList().get(0).setRestitution(0);
         }
 
         polygonShape.dispose();
         return body;
+    }
+
+    @SuppressWarnings("NewApi")
+    public Array<Body> getBodies(String name) {
+        Array<Body> bodies = new Array<>();
+        world.getBodies(bodies);
+        Arrays.stream(bodies.items).
+                filter(body -> ((PhisBodies) body.getUserData()).name.equals(name))
+                .collect(Collectors.toList());
+        return bodies;
     }
 
     public void setGravity(Vector2 gravity) {

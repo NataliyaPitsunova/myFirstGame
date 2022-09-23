@@ -17,39 +17,41 @@ public class MyContList implements ContactListener {
         if (a.getUserData() != null && b.getUserData() != null) {
             String tmpA = (String) a.getUserData();
             String tmpB = (String) b.getUserData();
-            if (tmpA.equals("hero") && tmpB.equals("Vasya")) {
+            if (tmpA.equals("hero") && tmpB.equals("roll")) {
                 GameScreen.bodies.add(b.getBody());
             }
-            if (tmpB.equals("hero") && tmpA.equals("Vasya")) {
+            if (tmpB.equals("hero") && tmpA.equals("roll")) {
                 GameScreen.bodies.add(a.getBody());
             }
-
-            if (tmpA.equals("legs") && tmpB.equals("wall")) {
-                counter++;
-            }
-            if (tmpB.equals("legs") && tmpA.equals("wall")) {
-                counter++;
-            }
-
         }
 
-    }
+        if (a.getUserData() != null) {
+            String s = (String)a.getUserData();
+            if (s.contains("legsRuns")){counter++;}
+        }
+
+        if (b.getUserData() != null) {
+            String s = (String)b.getUserData();
+            if (s.contains("legsRuns")){counter++;}
+        }
+        }
+
 
     @Override
     public void endContact(Contact contact) {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
-        if (a.getUserData() != null && b.getUserData() != null) {
-            String tmpA = (String) a.getUserData();
-            String tmpB = (String) b.getUserData();
 
-            if (tmpA.equals("legs") && tmpB.equals("wall")) {
-                counter--;
-            }
-            if (tmpB.equals("legs") && tmpA.equals("wall")) {
-                counter--;
-            }
+        if (a.getUserData() != null) {
+            String s = (String)a.getUserData();
+            if (s.contains("legsRuns")){counter--;}
         }
+
+        if (b.getUserData() != null) {
+            String s = (String)b.getUserData();
+            if (s.contains("legsRuns")){counter--;}
+        }
+
     }
 
     @Override

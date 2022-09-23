@@ -1,0 +1,180 @@
+
+mob.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 2, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 0
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 463, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 1
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 924, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 2
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 1385, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 3
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 2, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 4
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 463, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 5
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 924, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 6
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 1385, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 7
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 2, 926
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 8
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 463, 926
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 9
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 924, 926
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 10
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 1385, 926
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 11
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 2, 1387
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 12
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 463, 1387
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 13
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 924, 1387
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 14
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 1385, 1387
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 15
+
+mob2.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 2, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 16
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 463, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 17
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 924, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 18
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 1385, 4
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 19
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 2, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 20
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 463, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 21
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 924, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 22
+0_Fallen_Angels_Walking
+  rotate: false
+  xy: 1385, 465
+  size: 459, 459
+  orig: 459, 459
+  offset: 0, 0
+  index: 23
